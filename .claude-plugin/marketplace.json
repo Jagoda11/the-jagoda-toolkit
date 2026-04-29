@@ -1,0 +1,13 @@
+{
+  "name": "the-jagoda-toolkit",
+  "owner": {
+    "name": "Jagoda11"
+  },
+  "plugins": [
+    {
+      "name": "jc",
+      "source": "./plugins/jc",
+      "description": "Personal toolkit — skills, commands, hooks, agents"
+    }
+  ]
+}
