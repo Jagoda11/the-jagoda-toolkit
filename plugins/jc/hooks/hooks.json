@@ -18,6 +18,15 @@
             "command": "${CLAUDE_PLUGIN_ROOT}/hooks/block-git-commit-protected.sh"
           }
         ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/no-overwrite.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [
