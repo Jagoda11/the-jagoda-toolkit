@@ -78,7 +78,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ${CLAUDE_PROJECT_DIR}/plugins/jc/statusline-command.sh"
+    "command": "bash ${CLAUDE_PROJECT_DIR}/statusline-command.sh"
   },
   "enabledPlugins": {
     "caveman@caveman": true,
