@@ -3,11 +3,19 @@
   "owner": {
     "name": "Jagoda11"
   },
+  "metadata": {
+    "description": "The Jagoda Toolkit — skills, commands, hooks, agents for TypeScript monorepo development.",
+    "version": "0.1.0"
+  },
   "plugins": [
     {
       "name": "jc",
-      "source": "./plugins/jc",
-      "description": "Personal toolkit — skills, commands, hooks, agents"
+      "description": "Personal toolkit — skills, commands, hooks, agents.",
+      "source": "./",
+      "skills": [
+        "./skills/start",
+        "./skills/start-ui"
+      ]
     }
   ]
 }
