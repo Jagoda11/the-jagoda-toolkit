@@ -1,6 +1,6 @@
 ---
 name: start-ui
-description: Pre-flight with Chrome. Runs /start then confirms Chrome DevTools tools are available for UI work. Use instead of /start when you need browser access.
+description: Pre-flight with Chrome. Runs /start then confirms Chrome DevTools tools are available for UI testing. Use instead of /start when you need browser access.
 allowed-tools: Bash(*), Read, Glob, Grep, ToolSearch, mcp__codegraph__codegraph_status, mcp__codegraph__codegraph_search, mcp__codegraph__codegraph_files, mcp__chrome-devtools__take_screenshot, mcp__chrome-devtools__list_pages, mcp__chrome-devtools__navigate_page
 ---
 
@@ -39,7 +39,9 @@ Once Chrome is confirmed connected, navigate to the frontend app:
 mcp__chrome-devtools__navigate_page(url: "http://localhost:3000")
 ```
 
-Take a screenshot to confirm the app loaded.
+Take a screenshot to confirm the app loaded and auth is active. If the page redirects to the login page instead of the app, tell the user:
+
+> "Frontend redirected to login. Please authenticate in the browser, then re-run `/start-ui`."
 
 ### Step 4 - Output
 

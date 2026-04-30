@@ -6,11 +6,34 @@ allowed-tools: Bash(*), Read, Glob, Grep, ToolSearch, mcp__codegraph__codegraph_
 
 # Start - Pre-Flight
 
+## Purpose
+
+Prime the session for tool-first navigation. Load CodeGraph, check project state, establish what's changed. This replaces "read everything and hope" with "load tools and discover."
+
 ## Instructions
+
+### Step 0 — Read Permissions
+
+Read the project settings files to know what tools are pre-approved and denied:
+
+```
+Read: .claude/settings.json
+Read: .claude/settings.local.json  (optional — skip without error if missing)
+```
+
+`.claude/settings.json` is committed and always present. `.claude/settings.local.json` is per-developer and may not exist.
+
+Internalize the `allow` and `deny` lists. Never ask permission for tools in the allow list. Never attempt tools in the deny list. Do not print the contents — just absorb them silently.
 
 ### Step 1 - Load CodeGraph
 
-Call `codegraph_status` to verify the graph is available and check when it was last updated.
+Run `ToolSearch` to load the codegraph tools:
+
+```
+ToolSearch: "+codegraph status"
+```
+
+Then call `codegraph_status` to verify the graph is available and check when it was last updated.
 
 If `.codegraph/` does not exist or the graph is stale, tell the user:
 
