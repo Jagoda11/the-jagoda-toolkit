@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "The Jagoda Toolkit — skills, commands, hooks, agents for TypeScript monorepo development.",
-    "version": "0.1.5"
+    "version": "0.1.6"
   },
   "plugins": [
     {
@@ -23,7 +23,8 @@
         "./skills/protocol",
         "./skills/protocol/protocol-brains",
         "./skills/protocol/protocol-pinky",
-        "./skills/review-cicd"
+        "./skills/review-cicd",
+        "./skills/audit"
       ]
     }
   ]
