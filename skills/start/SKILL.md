@@ -10,6 +10,12 @@ allowed-tools: Bash(*), Read, Glob, Grep, ToolSearch, mcp__codegraph__codegraph_
 
 Prime the session for tool-first navigation. Load CodeGraph, check project state, establish what's changed. This replaces "read everything and hope" with "load tools and discover."
 
+## Principle
+
+Do not create more nodes to avoid thinking.
+
+Create nodes only when they reduce confusion.
+
 ## Instructions
 
 ### Step 0 — Read Permissions
