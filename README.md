@@ -71,6 +71,19 @@ claude plugin install jc@the-jagoda-toolkit
 | --- | --- |
 | `jc` | Personal toolkit — skills, commands, hooks, agents |
 
+## Recommended Companion Tools
+
+Both pair well with this toolkit:
+
+- [rtk](https://github.com/rtk-ai/rtk) by rtk-ai (Apache 2.0) — CLI proxy for token reduction. **Integrated** via the bundled `rtk-rewrite.sh` PreToolUse hook; no-op if `rtk` is not installed.
+- [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (MIT) — token-saving communication mode.
+
+Install separately. Neither is bundled or required.
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
+
 ## Author
 
 Built by Jagoda Cubrilo ([@Jagoda11](https://github.com/Jagoda11)).
