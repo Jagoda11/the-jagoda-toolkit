@@ -1,6 +1,6 @@
 {
   "name": "jc",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "The Jagoda Toolkit — Skills, hooks, and agents for TypeScript monorepo development with harmonic constraints.",
   "author": {
     "name": "Jagoda11"
