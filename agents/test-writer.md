@@ -112,16 +112,17 @@ If workspace uses a different runner, follow Step 1 — read closest existing te
 When the user asks for "tests" without specifying, write **unit tests**.
 
 **Vitest files** must start with:
+
 ```typescript
 /// <reference types="vitest/globals" />
 ```
 
 **Jest files** import:
+
 ```typescript
 import { describe, it, expect } from '@jest/globals';
 ```
 
-**node --test files** use:
 ```typescript
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
