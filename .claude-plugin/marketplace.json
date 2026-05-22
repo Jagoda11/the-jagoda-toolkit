@@ -1,11 +1,11 @@
 {
   "name": "the-jagoda-toolkit",
   "owner": {
-    "name": "Jagoda11"
+    "name": "Jagoda Cubrilo"
   },
   "metadata": {
-    "description": "The Jagoda Toolkit — skills, commands, hooks, agents for TypeScript monorepo development.",
-    "version": "0.1.9"
+    "description": "The Jagoda Toolkit by Jagoda Cubrilo — skills, commands, hooks, agents for TypeScript monorepo development.",
+    "version": "0.1.10"
   },
   "plugins": [
     {
