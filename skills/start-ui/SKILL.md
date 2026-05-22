@@ -10,6 +10,12 @@ allowed-tools: Bash(*), Read, Glob, Grep, ToolSearch, mcp__codegraph__codegraph_
 
 Run the standard `/start` pre-flight, then verify Chrome DevTools tools are loaded and navigate to the frontend.
 
+## Principle
+
+Do not create more nodes to avoid thinking.
+
+Create nodes only when they reduce confusion.
+
 ## Instructions
 
 ### Step 1 - Run /start
