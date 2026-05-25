@@ -16,7 +16,7 @@
       "homepage": "https://github.com/Jagoda11/the-jagoda-toolkit",
       "repository": "https://github.com/Jagoda11/the-jagoda-toolkit",
       "license": "MIT",
-      "keywords": ["typescript", "monorepo", "review", "skills", "hooks"],
+      "keywords": ["typescript", "monorepo", "code-review", "skills", "hooks", "claude-code", "react", "node"],
       "category": "development",
       "source": "./",
       "skills": [
