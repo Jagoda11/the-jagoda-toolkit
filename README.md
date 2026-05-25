@@ -39,35 +39,35 @@ claude plugin install jc@the-jagoda-toolkit
 
 | Skill | Purpose |
 | --- | --- |
-| `start` | Pre-flight: load CodeGraph, check branch and recent changes, pre-load core tools |
-| `start-ui` | Same as `start` plus verify Chrome DevTools and navigate to the frontend |
-| `prompt` | Structured task handoff — asks 5 intake questions before executing |
-| `audit` | Deep architecture audit: failure modes, boundary audit, test gaps, data flow, risk prioritization |
-| `protocol` | Router for named expert panels — `/protocol <name> <task>` |
-| `protocol-brains` | 11-expert backend/architecture panel (DB, TS, migration, monorepo, multiagent, orchestration) |
-| `protocol-pinky` | 16-expert frontend panel with dynamic UI-lib routing |
-| `review` | Smart router — detects branch changes and recommends which audit to run |
-| `review-pr` | Full pre-merge gate — automated checks, governance, AI patch safety score |
-| `review-auth` | Auth production-readiness audit (OIDC, sessions, tokens, route protection, secrets) |
-| `review-ai-compat` | AI-agent compatibility — determinism, explicitness, complexity, boundary clarity |
-| `review-cicd` | CI/CD reliability — pipelines, Dockerfiles, K8s, Skaffold, GitHub Actions |
-| `review-design` | 24 structural design principles for agent-readable code |
-| `review-monorepo` | Workspace boundaries, dependency direction, domain ownership, shared-package bloat |
-| `review-test-strategy` | Test architecture, coverage, flakiness — produces scored JSON contract |
+| `/jc:start` | Pre-flight: load CodeGraph, check branch and recent changes, pre-load core tools |
+| `/jc:start-ui` | Same as `/jc:start` plus verify Chrome DevTools and navigate to the frontend |
+| `/jc:prompt` | Structured task handoff — asks 5 intake questions before executing |
+| `/jc:audit` | Deep architecture audit: failure modes, boundary audit, test gaps, data flow, risk prioritization |
+| `/jc:protocol` | Router for named expert panels — `/jc:protocol <name> <task>` |
+| `/jc:protocol-brains` | 11-expert backend/architecture panel (DB, TS, migration, monorepo, multiagent, orchestration) |
+| `/jc:protocol-pinky` | 16-expert frontend panel with dynamic UI-lib routing |
+| `/jc:review` | Smart router — detects branch changes and recommends which audit to run |
+| `/jc:review-pr` | Full pre-merge gate — automated checks, governance, AI patch safety score |
+| `/jc:review-auth` | Auth production-readiness audit (OIDC, sessions, tokens, route protection, secrets) |
+| `/jc:review-ai-compat` | AI-agent compatibility — determinism, explicitness, complexity, boundary clarity |
+| `/jc:review-cicd` | CI/CD reliability — pipelines, Dockerfiles, K8s, Skaffold, GitHub Actions |
+| `/jc:review-design` | 24 structural design principles for agent-readable code |
+| `/jc:review-monorepo` | Workspace boundaries, dependency direction, domain ownership, shared-package bloat |
+| `/jc:review-test-strategy` | Test architecture, coverage, flakiness — produces scored JSON contract |
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `/verify` | Run lint, typecheck, and test on affected workspaces (auto-detects package manager) |
-| `/techdebt` | Review changed files for tech debt lint can't catch — duplication, dead code, naming drift |
+| `/jc:verify` | Run lint, typecheck, and test on affected workspaces (auto-detects package manager) |
+| `/jc:techdebt` | Review changed files for tech debt lint can't catch — duplication, dead code, naming drift |
 
 ## Agents
 
 | Agent | Purpose |
 | --- | --- |
-| `test-writer` | Writes tests for code changes, preserves harmonic constraints, verifies with format/lint/typecheck/test |
-| `ui-verifier` | Verifies a page UI end-to-end in Chrome via DevTools MCP; reports only, never fixes |
+| `jc:test-writer` | Writes tests for code changes, preserves harmonic constraints, verifies with format/lint/typecheck/test |
+| `jc:ui-verifier` | Verifies a page UI end-to-end in Chrome via DevTools MCP; reports only, never fixes |
 
 ## Hooks
 
@@ -98,6 +98,14 @@ claude plugin install jc@the-jagoda-toolkit
 - [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (MIT) — token-saving communication mode.
 
 All install separately. None bundled.
+
+## Credits
+
+Thanks to the projects this toolkit leans on:
+
+- **[CodeGraph](https://github.com/colbymchenry/codegraph)** — colbymchenry's local code intelligence is what makes the pre-flight skills genuinely useful. Without it, `start` is just a status print.
+- **[rtk](https://github.com/rtk-ai/rtk)** — rtk-ai's token-saving CLI proxy keeps long sessions affordable; the bundled hook is a thin wrapper around their work.
+- **[caveman](https://github.com/JuliusBrussee/caveman)** — Julius Brussee's compression mode pairs naturally with terse review workflows.
 
 ## License
 
