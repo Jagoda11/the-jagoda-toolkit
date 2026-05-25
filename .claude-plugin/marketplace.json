@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "The Jagoda Toolkit by Jagoda Cubrilo — skills, commands, hooks, agents for TypeScript monorepo development.",
-    "version": "0.1.10"
+    "version": "0.1.11"
   },
   "plugins": [
     {
