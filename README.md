@@ -13,6 +13,21 @@ My Claude Code plugins, skills, and hooks — tuned to my workflow.
 - **Agents** that write tests preserving harmonic constraints, and verify a page UI end-to-end in Chrome against a real DB
 - **Hooks** that block commits to protected branches, prevent file overwrites, scan for credentials, auto-verify after writes, sync skills on session start, and rewrite shell commands through `rtk` for token savings
 
+## Prerequisites
+
+`jq` is required by the security hooks (`block-git-commit-protected`, `no-overwrite`, `scan-credentials`, `verify-on-write`). Without it those hooks silently no-op instead of blocking.
+
+```sh
+# macOS
+brew install jq
+
+# Debian / Ubuntu
+sudo apt install jq
+
+# Fedora / RHEL
+sudo dnf install jq
+```
+
 ## Install
 
 ```sh
