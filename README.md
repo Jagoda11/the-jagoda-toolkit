@@ -1,6 +1,6 @@
-# the-jagoda-toolkit
+# The Jagoda Toolkit
 
-My Claude Code plugins, skills, and hooks — tuned to my workflow.
+A Claude Code plugin — skills, hooks, and agents for TypeScript monorepo development.
 
 ## What it does
 
