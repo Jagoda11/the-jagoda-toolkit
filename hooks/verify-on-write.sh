@@ -4,7 +4,8 @@
 # Blocks via JSON if any step fails so Claude must fix before continuing.
 
 if ! command -v jq >/dev/null 2>&1; then
-  exit 0
+  echo "jc plugin: jq required for verify-on-write, install via brew/apt/dnf — see README" >&2
+  exit 1
 fi
 
 INPUT=$(cat)
