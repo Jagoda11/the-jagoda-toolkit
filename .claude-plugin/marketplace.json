@@ -10,7 +10,14 @@
   "plugins": [
     {
       "name": "jc",
+      "displayName": "Jagoda Toolkit",
       "description": "Personal toolkit — skills, commands, hooks, agents.",
+      "author": { "name": "Jagoda Cubrilo" },
+      "homepage": "https://github.com/Jagoda11/the-jagoda-toolkit",
+      "repository": "https://github.com/Jagoda11/the-jagoda-toolkit",
+      "license": "MIT",
+      "keywords": ["typescript", "monorepo", "review", "skills", "hooks"],
+      "category": "development",
       "source": "./",
       "skills": [
         "./skills/start",
