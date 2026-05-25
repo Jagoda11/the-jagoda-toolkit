@@ -86,14 +86,18 @@ claude plugin install jc@the-jagoda-toolkit
 | --- | --- |
 | `jc` | Personal toolkit — skills, commands, hooks, agents |
 
-## Recommended Companion Tools
+## Companion Tools
 
-Both pair well with this toolkit:
+### Required
+
+- [CodeGraph](https://github.com/colbymchenry/codegraph) by colbymchenry (MIT) — pre-indexed code knowledge graph for Claude Code. **Required** by `start` and `start-ui` skills. Install globally (`npm install -g @colbymchenry/codegraph`), then run `codegraph init -i` in your project.
+
+### Optional
 
 - [rtk](https://github.com/rtk-ai/rtk) by rtk-ai (Apache 2.0) — CLI proxy for token reduction. **Integrated** via the bundled `rtk-rewrite.sh` PreToolUse hook; no-op if `rtk` is not installed.
 - [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (MIT) — token-saving communication mode.
 
-Install separately. Neither is bundled or required.
+All install separately. None bundled.
 
 ## License
 
