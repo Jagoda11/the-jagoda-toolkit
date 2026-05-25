@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "jc",
-      "displayName": "Jagoda Toolkit",
+      "displayName": "The Jagoda Toolkit",
       "description": "Personal toolkit — skills, commands, hooks, agents.",
       "author": { "name": "Jagoda Cubrilo" },
       "homepage": "https://github.com/Jagoda11/the-jagoda-toolkit",
