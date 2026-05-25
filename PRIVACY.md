@@ -1,4 +1,4 @@
-# Privacy Policy — The-Jagoda-toolkit
+# Privacy Policy — The-Jagoda-Toolkit
 
 This plugin runs entirely locally inside Claude Code on the user's machine.
 
