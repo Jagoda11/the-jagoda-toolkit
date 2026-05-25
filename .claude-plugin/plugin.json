@@ -1,7 +1,7 @@
 {
   "name": "jc",
   "displayName": "The Jagoda Toolkit",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "The Jagoda Toolkit by Jagoda Cubrilo — Skills, hooks, and agents for TypeScript monorepo development with harmonic constraints.",
   "keywords": ["typescript", "monorepo", "code-review", "skills", "claude-code", "react", "node"],
   "author": {
