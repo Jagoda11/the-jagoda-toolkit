@@ -2,6 +2,8 @@
 
 A Claude Code plugin — skills, hooks, and agents for TypeScript monorepo development.
 
+> **New to Claude Code? Feeling lost?** Install this toolkit and you've got a working baseline — pre-flight checks, review skills, safety hooks, and agents — without having to wire it all up yourself.
+
 ## What it does
 
 `jc` is a single Claude Code plugin bundling skills, commands, hooks, and agents for TypeScript monorepo development. It gives Claude:
