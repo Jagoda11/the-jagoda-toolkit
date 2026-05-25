@@ -1,8 +1,8 @@
 {
   "name": "jc",
   "displayName": "The Jagoda Toolkit",
-  "version": "0.1.13",
-  "description": "The Jagoda Toolkit by Jagoda Cubrilo — Skills, hooks, and agents for TypeScript monorepo development with harmonic constraints.",
+  "version": "0.1.14",
+  "description": "The Jagoda Toolkit made by Jagoda Cubrilo  Claude Code skills, hooks, and agents for TS monorepo dev. Requires CodeGraph (npm i -g @colbymchenry/codegraph) and jq (brew/apt/dnf install jq).",
   "keywords": ["typescript", "monorepo", "code-review", "skills", "claude-code", "react", "node"],
   "author": {
     "name": "Jagoda Cubrilo"

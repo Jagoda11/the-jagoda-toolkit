@@ -3,7 +3,8 @@
 # Runs as PostToolUse hook on Edit|Write — scans the written file immediately.
 
 if ! command -v jq >/dev/null 2>&1; then
-  exit 0
+  echo "jc plugin: jq required for scan-credentials, install via brew/apt/dnf — see README" >&2
+  exit 1
 fi
 
 INPUT=$(cat)

@@ -5,6 +5,11 @@
 
 set -euo pipefail
 
+if ! command -v jq >/dev/null 2>&1; then
+  echo "jc plugin: jq required for block-git-commit-protected, install via brew/apt/dnf — see README" >&2
+  exit 1
+fi
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
 
 if [[ "$BRANCH" == "master" || "$BRANCH" == "main" ]]; then

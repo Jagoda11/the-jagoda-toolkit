@@ -3,7 +3,8 @@
 # Write creates new files. If the file exists, Claude should use Edit instead.
 
 if ! command -v jq >/dev/null 2>&1; then
-  exit 0
+  echo "jc plugin: jq required for no-overwrite, install via brew/apt/dnf — see README" >&2
+  exit 1
 fi
 
 INPUT=$(cat)
