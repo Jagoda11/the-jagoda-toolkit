@@ -73,14 +73,23 @@ claude plugin install jc@the-jagoda-toolkit
 
 ## Hooks
 
-| Hook | When | What |
-| --- | --- | --- |
-| `rtk-rewrite.sh` | PreToolUse (Bash) | Rewrites shell commands through `rtk` for token savings |
-| `block-git-commit-protected.sh` | PreToolUse (`git commit`) | Blocks commits on protected branches |
-| `no-overwrite.sh` | PreToolUse (Write) | Prevents accidental file overwrites |
-| `scan-credentials.sh` | PostToolUse (Edit / Write / MultiEdit) | Scans newly written content for credentials |
-| `verify-on-write.sh` | PostToolUse (Edit / Write / MultiEdit) | Auto-runs verify after file writes |
-| `sync-skills.sh` | SessionStart | Keeps local skills in sync at session start |
+| Hook | When | What | Modifies | Can Block | Failure Behavior |
+|------|------|------|----------|-----------|------------------|
+| rtk-rewrite.sh | PreToolUse (Bash) | Rewrites shell commands through rtk for token savings | command only | no | falls back to original command |
+| block-git-commit-protected.sh | PreToolUse (git commit) | Blocks commits on protected branches | no | yes | blocks commit |
+| no-overwrite.sh | PreToolUse (Write) | Prevents accidental file overwrites | no | yes | blocks write |
+| scan-credentials.sh | PostToolUse (Edit / Write / MultiEdit) | Scans newly written content for credentials | no | yes | flags and blocks if configured |
+| verify-on-write.sh | PostToolUse (Edit / Write / MultiEdit) | Auto-runs verification after file writes | no | no | reports failures |
+| sync-skills.sh | SessionStart | Syncs local skills | no | no | logs failure |
+
+All hooks operate locally on Claude Code tool payloads and repository context.
+
+- They do not make network calls
+- They do not access files outside the working repository
+- They do not execute arbitrary external code beyond defined commands
+- They do not modify files unless explicitly part of the invoked tool action
+
+The design is intentionally conservative: hooks either block unsafe actions or report issues, but do not silently alter repository state.
 
 ## Plugins
 
