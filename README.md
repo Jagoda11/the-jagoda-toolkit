@@ -17,7 +17,7 @@ A Claude Code plugin — skills, hooks, and agents for TypeScript monorepo devel
 
 ## Prerequisites
 
-`jq` is required by the security hooks (`block-git-commit-protected`, `no-overwrite`, `scan-credentials`, `verify-on-write`). Without it those hooks silently no-op instead of blocking.
+`jq` is required by the security hooks (`block-git-commit-protected`, `no-overwrite`, `scan-credentials`, `verify-on-write`).
 
 ```sh
 # macOS
