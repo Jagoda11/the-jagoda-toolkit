@@ -86,7 +86,7 @@ claude plugin install jc@the-jagoda-toolkit
 
 | Plugin | What |
 | --- | --- |
-| `jc` | Personal toolkit — skills, commands, hooks, agents |
+| `jc` toolkit — skills, commands, hooks, agents |
 
 ## Companion Tools
 
