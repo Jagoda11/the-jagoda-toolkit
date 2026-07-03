@@ -179,6 +179,10 @@ Thanks to the projects this toolkit leans on:
 - **[rtk](https://github.com/rtk-ai/rtk)** — rtk-ai's token-saving CLI proxy keeps long sessions affordable; the bundled hook is a thin wrapper around their work.
 - **[caveman](https://github.com/JuliusBrussee/caveman)** — Julius Brussee's compression mode pairs naturally with terse review workflows.
 
+## Changelog
+
+Release notes are in [CHANGELOG.md](./CHANGELOG.md).
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
