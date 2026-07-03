@@ -1,6 +1,6 @@
 ---
 name: start
-description: Pre-flight for a coding session. Loads CodeGraph, checks branch and recent changes, pre-loads core tools, and establishes session workflow rules.
+description: Pre-flight for a coding session. Loads CodeGraph, checks branch and recent changes, pre-loads core tools, and establishes session workflow rules. Use at start of a coding session, when the user asks to "start", or before any non-trivial task.
 allowed-tools: Bash(*), Read, Glob, Grep, ToolSearch, mcp__codegraph__codegraph_status, mcp__codegraph__codegraph_search, mcp__codegraph__codegraph_callers, mcp__codegraph__codegraph_callees, mcp__codegraph__codegraph_context, mcp__codegraph__codegraph_node, mcp__codegraph__codegraph_impact
 ---
 

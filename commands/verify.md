@@ -1,5 +1,5 @@
 ---
-description: Run lint, typecheck, test on affected workspaces only. Auto-detects package manager.
+description: Run lint, typecheck, test on affected workspaces only. Auto-detects package manager. Use after code edits when the user asks to verify, lint, typecheck, or test affected workspaces.
 ---
 
 Run lint, typecheck, and test on affected workspaces. Detect what changed, verify only those.
