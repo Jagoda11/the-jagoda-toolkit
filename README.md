@@ -105,6 +105,11 @@ The design is intentionally conservative: hooks either block unsafe actions or r
 
 ### Optional
 
+- [typescript-lsp](https://github.com/anthropics/claude-plugins-official) by Anthropic — official Language Server Protocol plugin. Enables go-to-definition, find-references, and refactoring intelligence for Claude on TypeScript codebases. Recommended for this toolkit since it targets TS monorepos. Install:
+  ```sh
+  claude plugin marketplace add anthropics/claude-plugins-official
+  claude plugin install typescript-lsp@claude-plugins-official
+  ```
 - [rtk](https://github.com/rtk-ai/rtk) by rtk-ai (Apache 2.0) — CLI proxy for token reduction. **Integrated** via the bundled `rtk-rewrite.sh` PreToolUse hook; no-op if `rtk` is not installed.
 - [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (MIT) — token-saving communication mode.
 
