@@ -16,7 +16,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ### Changed
 
 - `start` and `verify` skill descriptions extended with "Use when…" trigger clauses so Claude can auto-invoke alongside user invocation.
-- Replace angle brackets with square brackets in `protocol` skill description to avoid a known validator silent-reject bug (anthropics/claude-code#63081).
+- Replace angle brackets with square brackets in `protocol` skill and `test-writer` / `ui-verifier` agent descriptions to avoid a known validator silent-reject bug (anthropics/claude-code#63081).
 - Update keywords in `marketplace.json` and `plugin.json` (#11).
 - Pre submission fixes across `marketplace.json`, `plugin.json`, `README.md`, and hook scripts (#10).
 
