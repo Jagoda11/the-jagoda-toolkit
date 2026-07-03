@@ -1,6 +1,6 @@
 ---
 name: protocol
-description: 'Launch a named expert protocol. Usage: /protocol <name> <task>. Run /protocol with no args to list available protocols.'
+description: 'Launch a named expert protocol. Usage: /protocol [name] [task]. Run /protocol with no args to list available protocols.'
 ---
 
 # Protocol — Expert Team Router
