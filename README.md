@@ -30,6 +30,8 @@ sudo apt install jq
 sudo dnf install jq
 ```
 
+Python 3 (`python3` on `PATH`) is required by the `content-safety-context` hook, which injects the plugin's untrusted-content rules at session start and on every prompt. macOS and most Linux distributions ship it; otherwise install it from [python.org](https://www.python.org/downloads/) or your package manager.
+
 ## Install
 
 ```sh
