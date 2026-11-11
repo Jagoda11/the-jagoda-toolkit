@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-11
+
+### Added
+
+- `content-safety-context.py` hook: injects `rules/untrusted-content.md` (prompt-injection and untrusted-content rules) at `SessionStart` and on every `UserPromptSubmit`. Guidance only — it does not block actions.
+- `tests/test_content_safety.py`: rule is injected, hostile prompts cannot replace it, missing or empty rule fails cleanly without echoing the prompt, hook is registered with a plugin-relative path. Run with `python3 -m unittest discover -s tests`.
+
 ## [0.1.16] - 2026-11-11
 
 ### Fixed

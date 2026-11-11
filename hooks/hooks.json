@@ -1,5 +1,25 @@
 {
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/content-safety-context.py\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/content-safety-context.py\""
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
