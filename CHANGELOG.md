@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.1.16] - 2026-11-11
+
+### Fixed
+
+- `block-git-commit-protected` hook never ran: its PreToolUse `matcher` used permission-rule syntax (`Bash(git commit*)`), which hooks treat as a tool-name regex that never matches. Now `matcher: "Bash"` with `if: "Bash(git commit*)"`.
+- `block-git-commit-protected` now also blocks commits on `develop`, as its header comment already stated.
+
 ## [0.1.15] - 2026-07-03
 
 ### Added

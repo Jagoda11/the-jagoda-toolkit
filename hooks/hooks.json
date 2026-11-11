@@ -11,10 +11,11 @@
         ]
       },
       {
-        "matcher": "Bash(git commit*)",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
+            "if": "Bash(git commit*)",
             "command": "${CLAUDE_PLUGIN_ROOT}/hooks/block-git-commit-protected.sh"
           }
         ]

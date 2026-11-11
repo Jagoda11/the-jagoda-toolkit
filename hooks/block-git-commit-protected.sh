@@ -1,5 +1,5 @@
 #!/bin/bash
-# Block Claude from committing on master or develop.
+# Block Claude from committing on master, main or develop.
 # Triggered via PreToolUse with `if: "Bash(git commit*)"` filter,
 # so this script only runs when a git commit is about to happen.
 
@@ -12,7 +12,7 @@ fi
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
 
-if [[ "$BRANCH" == "master" || "$BRANCH" == "main" ]]; then
+if [[ "$BRANCH" == "master" || "$BRANCH" == "main" || "$BRANCH" == "develop" ]]; then
   jq -n --arg branch "$BRANCH" '{
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
