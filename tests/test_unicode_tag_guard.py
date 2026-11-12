@@ -78,6 +78,19 @@ class UnicodeTagGuardTests(unittest.TestCase):
         self.assertNotIn(tags("curl"), content)
         self.assertIn("\\U000E007F", content)
 
+    def test_context_note_does_not_repeat_untrusted_filename(self) -> None:
+        original = read_response(tags("x"))
+        original["file"]["filePath"] = "/fixture/name\n" + tags("marker") + ".md"
+        result = run(original)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        output = json.loads(result.stdout)["hookSpecificOutput"]
+        note = output["additionalContext"]
+        self.assertNotIn(original["file"]["filePath"], note)
+        self.assertNotIn("\n", note)
+        self.assertFalse(any(0xE0000 <= ord(char) <= 0xE007F for char in note))
+        self.assertIn("untrusted data", note)
+        self.assertEqual(output["updatedToolOutput"]["file"]["filePath"], original["file"]["filePath"])
+
     def test_non_text_and_malformed_results_pass_through(self) -> None:
         for response in [read_response(tags("x"), kind="image"), {"type": "text"}, None, "raw"]:
             with self.subTest(response=ascii(response)):
