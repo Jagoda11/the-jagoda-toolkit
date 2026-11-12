@@ -80,6 +80,7 @@ claude plugin install jc@the-jagoda-toolkit
 | rtk-rewrite.sh | PreToolUse (Bash) | Rewrites shell commands through rtk for token savings | command only | no | falls back to original command |
 | block-git-commit-protected.sh | PreToolUse (git commit) | Blocks commits on protected branches | no | yes | blocks commit |
 | no-overwrite.sh | PreToolUse (Write) | Prevents accidental file overwrites | no | yes | blocks write |
+| confirm-codex-config.py | PreToolUse (Edit / Write / MultiEdit / NotebookEdit) | Requests approval for file-tool changes to `.codex/config.toml` | no | yes | requests approval if path validation fails |
 | scan-credentials.sh | PostToolUse (Edit / Write / MultiEdit) | Scans newly written content for credentials | no | yes | flags and blocks if configured |
 | verify-on-write.sh | PostToolUse (Edit / Write / MultiEdit) | Auto-runs verification after file writes | no | no | reports failures |
 | content-safety-context.py | SessionStart, UserPromptSubmit | Injects `rules/untrusted-content.md` as guidance | no | no | exits 2 with a short error if the rule file is missing |
