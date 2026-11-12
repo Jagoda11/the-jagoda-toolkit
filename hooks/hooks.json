@@ -52,6 +52,15 @@
     ],
     "PostToolUse": [
       {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/escape-unicode-tags.py\""
+          }
+        ]
+      },
+      {
         "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
