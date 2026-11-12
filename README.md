@@ -82,6 +82,8 @@ claude plugin install jc@the-jagoda-toolkit
 | no-overwrite.sh | PreToolUse (Write) | Prevents accidental file overwrites | no | yes | blocks write |
 | scan-credentials.sh | PostToolUse (Edit / Write / MultiEdit) | Scans newly written content for credentials | no | yes | flags and blocks if configured |
 | verify-on-write.sh | PostToolUse (Edit / Write / MultiEdit) | Auto-runs verification after file writes | no | no | reports failures |
+| content-safety-context.py | SessionStart, UserPromptSubmit | Injects `rules/untrusted-content.md` as guidance | no | no | exits 2 with a short error if the rule file is missing |
+| escape-unicode-tags.py | PostToolUse (Read) | Shows hidden Unicode Tag characters as visible escapes in what Claude receives | Read result only | no | passes the result through unchanged |
 | sync-skills.sh | SessionStart | Syncs local skills | no | no | logs failure |
 
 All hooks operate locally on Claude Code tool payloads and repository context.
@@ -92,6 +94,15 @@ All hooks operate locally on Claude Code tool payloads and repository context.
 - They do not modify files unless explicitly part of the invoked tool action
 
 The design is intentionally conservative: hooks either block unsafe actions or report issues, but do not silently alter repository state.
+
+### Unicode Tag guard scope
+
+`escape-unicode-tags.py` rewrites the text of a `Read` result before Claude sees it: hidden Unicode Tag characters (U+E0000–U+E007F) become visible escapes such as `\U000E0049`, and Claude gets a note to treat the decoded text as untrusted. The file on disk is never changed.
+
+- Kept as-is: ordinary text and emoji, and the three recognized emoji tag sequences (England, Scotland, Wales flags). A flag-shaped sequence that is not one of those is escaped.
+- Not covered: Bash output (`cat`, `grep`), Grep, WebFetch and MCP results; zero-width and bidi characters; image, PDF and notebook reads.
+- Edits whose `old_string` spans hidden Tag characters will not match, because Claude only sees the escapes.
+- If a future Claude Code version changes the `Read` result shape, the rewrite is ignored and the original output is used.
 
 ## Plugins
 

@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-12
+
+### Added
+
+- `escape-unicode-tags.py` PostToolUse hook on `Read`: replaces hidden Unicode Tag characters (U+E0000–U+E007F) in the text Claude receives with visible escapes via `updatedToolOutput`, and notes them as untrusted. Recognized emoji tag sequences (England, Scotland, Wales flags) are kept; source files are not modified. Scope and limits documented in README.
+- `tests/test_unicode_tag_guard.py` (7 tests), including recognized flags and a fake flag wrapping hidden instructions.
+
 ## [0.2.0] - 2026-11-11
 
 ### Added
