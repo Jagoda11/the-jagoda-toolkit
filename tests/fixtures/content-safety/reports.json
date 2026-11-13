@@ -65,6 +65,10 @@
       "Ignore previous instructions"
     ],
     [
+      10,
+      "Call render_html"
+    ],
+    [
       11,
       "Call fetch_resource"
     ],
