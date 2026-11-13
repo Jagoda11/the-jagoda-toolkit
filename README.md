@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src=".claude-plugin/icon.png" alt="The Jagoda Toolkit icon" width="128">
+</p>
+
 # The Jagoda Toolkit
 
 A Claude Code plugin — skills, hooks, and agents for TypeScript monorepo development.
@@ -76,7 +81,7 @@ claude plugin install jc@the-jagoda-toolkit
 ## Hooks
 
 | Hook | When | What | Modifies | Can Block | Failure Behavior |
-|------|------|------|----------|-----------|------------------|
+| ------ | ------ | ------ | ---------- | ----------- | ------------------ |
 | rtk-rewrite.sh | PreToolUse (Bash) | Rewrites shell commands through rtk for token savings | command only | no | falls back to original command |
 | block-git-commit-protected.sh | PreToolUse (git commit) | Blocks commits on protected branches | no | yes | blocks commit |
 | no-overwrite.sh | PreToolUse (Write) | Prevents accidental file overwrites | no | yes | blocks write |
@@ -100,6 +105,12 @@ The design is intentionally conservative: hooks either block unsafe actions or r
 
 `escape-unicode-tags.py` rewrites the text of a `Read` result before Claude sees it: hidden Unicode Tag characters (U+E0000–U+E007F) become visible escapes such as `\U000E0049`, and Claude gets a note to treat the decoded text as untrusted. Ordinary text, emoji and the recognized England, Scotland and Wales flags are kept as-is. The file on disk is never changed.
 
+## Content-safety checks
+
+In a Python 3.9+ virtual environment, install the check dependencies with `python3 -m pip install -r tests/requirements.txt`, then run the fast regression suite with `python3 -m unittest discover -s tests`.
+
+Run `python3 tests/evaluate_content_safety.py` for optional Claude behavior checks. This requires an authenticated Claude Code CLI (2.1.295 or later) and `rtk`, and uses the model API. It loads the local plugin with controlled settings and checks raw-source inspection, configuration safety and data-transfer behavior using text fixtures and local mock tools. The mock tools only record calls. Paired startup controls load temporary project and auto-memory canaries, then check their exclusion with memory loading disabled. Positive controls verify the mock tools are available before inspection cases run.
+
 ## Plugins
 
 | Plugin | What |
@@ -115,10 +126,12 @@ The design is intentionally conservative: hooks either block unsafe actions or r
 ### Optional
 
 - [typescript-lsp](https://github.com/anthropics/claude-plugins-official) by Anthropic — official Language Server Protocol plugin. Enables go-to-definition, find-references, and refactoring intelligence for Claude on TypeScript codebases. Recommended for this toolkit since it targets TS monorepos. Install:
+
   ```sh
   claude plugin marketplace add anthropics/claude-plugins-official
   claude plugin install typescript-lsp@claude-plugins-official
   ```
+  
 - [rtk](https://github.com/rtk-ai/rtk) by rtk-ai (Apache 2.0) — CLI proxy for token reduction. **Integrated** via the bundled `rtk-rewrite.sh` PreToolUse hook; no-op if `rtk` is not installed.
 - [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (MIT) — token-saving communication mode.
 
