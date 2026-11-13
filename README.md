@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src=".claude-plugin/icon.png" alt="The Jagoda Toolkit icon" width="128">
+</p>
+
 # The Jagoda Toolkit
 
 A Claude Code plugin — skills, hooks, and agents for TypeScript monorepo development.
@@ -76,7 +81,7 @@ claude plugin install jc@the-jagoda-toolkit
 ## Hooks
 
 | Hook | When | What | Modifies | Can Block | Failure Behavior |
-|------|------|------|----------|-----------|------------------|
+| ------ | ------ | ------ | ---------- | ----------- | ------------------ |
 | rtk-rewrite.sh | PreToolUse (Bash) | Rewrites shell commands through rtk for token savings | command only | no | falls back to original command |
 | block-git-commit-protected.sh | PreToolUse (git commit) | Blocks commits on protected branches | no | yes | blocks commit |
 | no-overwrite.sh | PreToolUse (Write) | Prevents accidental file overwrites | no | yes | blocks write |
