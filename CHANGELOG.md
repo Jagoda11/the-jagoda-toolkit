@@ -6,6 +6,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Data-transfer behavior checks with dummy catalogue references, local URL and DNS mocks, and image-output scenarios.
+
+### Fixed
+
+- Require fixture-specific findings in content-safety evaluations and retain diagnostics while terminating timed-out POSIX process groups.
+
 ## [0.2.4] - 2026-11-13
 
 ### Added (0.2.4)

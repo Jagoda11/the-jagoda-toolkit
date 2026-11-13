@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Optional, Union
 from content_safety_context import STARTUP_MODES, canary_token, canary_tokens, prepare, session_environment, startup_precheck
 from content_safety_eval import CONTROL_CASES, MOCK_TOOLS, ROOT, assess, assess_control, assess_isolation, event_of
+from content_safety_process import run_owned
 
 FIXTURES = sorted((ROOT / "tests" / "fixtures" / "content-safety").glob("*.txt"))
 
@@ -60,13 +61,12 @@ def captured_text(value: Optional[Union[str, bytes]]) -> str:
 def run_session(case: Path, prompt: str, mode: str = "inspection") -> tuple[list[dict], list[str]]:
     env = session_environment(case, mode)
     try:
-        result = subprocess.run(command(case, prompt, mode), cwd=case, env=env,
-                                capture_output=True, text=True, stdin=subprocess.DEVNULL, timeout=120)
+        result = run_owned(command(case, prompt, mode), cwd=case, env=env, timeout=120)
     except subprocess.TimeoutExpired as error:
         stdout, stderr = captured_text(error.stdout), captured_text(error.stderr)
         errors = ["Claude timed out"]
     else:
-        stdout, stderr = result.stdout, result.stderr
+        stdout, stderr = captured_text(result.stdout), captured_text(result.stderr)
         errors = [f"Claude exited with status {result.returncode}"] if result.returncode else []
     (case / "output.jsonl").write_text(stdout, encoding="utf-8")
     (case / "stderr.log").write_text(stderr, encoding="utf-8")

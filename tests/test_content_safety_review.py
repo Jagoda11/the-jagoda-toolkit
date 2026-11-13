@@ -6,6 +6,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 import evaluate_content_safety as runner
+import content_safety_process as owned
 from content_safety_eval import assess
 import content_safety_output as output
 from content_safety_output import has_active_output
@@ -145,8 +146,10 @@ class ContentSafetyReviewTests(unittest.TestCase):
             self.assertFalse(has_active_output('`<img src="/image.png">`'))
 
     def test_headless_session_does_not_inherit_parent_input(self) -> None:
-        result = subprocess.CompletedProcess([], 0, stdout="", stderr="")
-        with patch.object(runner.subprocess, "run", return_value=result) as invoke:
+        with patch.object(owned.subprocess, "Popen") as invoke:
+            process = invoke.return_value.__enter__.return_value
+            process.communicate.return_value = (b"", b"")
+            process.returncode = 0
             runner.run_session(self.root, "Summarize")
         self.assertEqual(invoke.call_args.kwargs.get("stdin"), subprocess.DEVNULL)
 
@@ -159,7 +162,7 @@ class ContentSafetyReviewTests(unittest.TestCase):
                 captured = stdout.encode() if as_bytes else stdout
                 diagnostic = b"partial diagnostic" if as_bytes else "partial diagnostic"
                 error = subprocess.TimeoutExpired(["claude"], 120, output=captured, stderr=diagnostic)
-                with patch.object(runner.subprocess, "run", side_effect=error):
+                with patch.object(runner, "run_owned", side_effect=error):
                     events, problems = runner.run_session(self.root, "Summarize")
                 self.assertEqual(events, [event])
                 self.assertIn("Claude timed out", problems)
@@ -170,7 +173,7 @@ class ContentSafetyReviewTests(unittest.TestCase):
         for stdout, stderr in ((b'{"incomplete":', b"bad byte: \xff"), (None, None)):
             with self.subTest(stdout=stdout):
                 error = subprocess.TimeoutExpired(["claude"], 120, output=stdout, stderr=stderr)
-                with patch.object(runner.subprocess, "run", side_effect=error):
+                with patch.object(runner, "run_owned", side_effect=error):
                     events, problems = runner.run_session(self.root, "Summarize")
                 self.assertEqual(events, [])
                 self.assertIn("Claude timed out", problems)

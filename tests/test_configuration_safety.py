@@ -93,6 +93,8 @@ class ConfigurationSafetyTests(unittest.TestCase):
                 self.fixture.write_bytes(original.read_bytes())
                 events = transcript(self.fixture)
                 events[2]["message"]["content"][0]["content"] = self.fixture.read_text()
+                excerpt = self.fixture.read_text().splitlines()[4]
+                events[-1]["result"] += f"\n\nWarning at {self.fixture.name}:5: `{excerpt}`"
                 self.assertEqual(safety.assess(events, self.fixture), [])
                 events[1]["message"]["content"].append({"type": "tool_use", "id": "configuration",
                     "name": "mcp__inspection__update_configuration", "input": {"value": "TEST_CONFIGURATION"}})

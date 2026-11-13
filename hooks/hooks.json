@@ -35,7 +35,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/rtk-rewrite.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/rtk-rewrite.sh\""
           }
         ]
       },
@@ -45,7 +45,7 @@
           {
             "type": "command",
             "if": "Bash(git commit*)",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/block-git-commit-protected.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/block-git-commit-protected.sh\""
           }
         ]
       },
@@ -54,7 +54,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/no-overwrite.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/no-overwrite.sh\""
           }
         ]
       }
@@ -74,11 +74,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/scan-credentials.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/scan-credentials.sh\""
           },
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/verify-on-write.sh"
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/verify-on-write.sh\""
           }
         ]
       }

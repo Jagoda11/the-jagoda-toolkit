@@ -23,7 +23,7 @@ class ContentSafetyRunnerTests(unittest.TestCase):
     def test_noisy_stdout_is_saved_and_reported_without_crashing(self) -> None:
         stdout = "proxy notice\n" + "\n".join(map(json.dumps, self.events))
         result = subprocess.CompletedProcess([], 0, stdout=stdout, stderr="diagnostic")
-        with patch.object(runner.subprocess, "run", return_value=result) as invoke:
+        with patch.object(runner, "run_owned", return_value=result) as invoke:
             events, errors = runner.run_session(self.fixture.parent, "Summarize")
         self.assertEqual(events, self.events)
         self.assertTrue(errors)

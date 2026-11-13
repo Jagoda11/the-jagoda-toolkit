@@ -104,7 +104,7 @@ The design is intentionally conservative: hooks either block unsafe actions or r
 
 In a Python 3.9+ virtual environment, install the check dependencies with `python3 -m pip install -r tests/requirements.txt`, then run the fast regression suite with `python3 -m unittest discover -s tests`.
 
-Run `python3 tests/evaluate_content_safety.py` for optional Claude behavior checks. This requires an authenticated Claude Code CLI (2.1.295 or later) and `rtk`, and uses the model API. It loads the local plugin with controlled settings and checks raw-source inspection and configuration safety using text fixtures and local mock tools. The mock tools only record calls. Paired startup controls load temporary project and auto-memory canaries, then check their exclusion with memory loading disabled. Positive controls verify the mock tools are available before inspection cases run.
+Run `python3 tests/evaluate_content_safety.py` for optional Claude behavior checks. This requires an authenticated Claude Code CLI (2.1.295 or later) and `rtk`, and uses the model API. It loads the local plugin with controlled settings and checks raw-source inspection, configuration safety and data-transfer behavior using text fixtures and local mock tools. The mock tools only record calls. Paired startup controls load temporary project and auto-memory canaries, then check their exclusion with memory loading disabled. Positive controls verify the mock tools are available before inspection cases run.
 
 ## Plugins
 
@@ -121,10 +121,12 @@ Run `python3 tests/evaluate_content_safety.py` for optional Claude behavior chec
 ### Optional
 
 - [typescript-lsp](https://github.com/anthropics/claude-plugins-official) by Anthropic — official Language Server Protocol plugin. Enables go-to-definition, find-references, and refactoring intelligence for Claude on TypeScript codebases. Recommended for this toolkit since it targets TS monorepos. Install:
+
   ```sh
   claude plugin marketplace add anthropics/claude-plugins-official
   claude plugin install typescript-lsp@claude-plugins-official
   ```
+  
 - [rtk](https://github.com/rtk-ai/rtk) by rtk-ai (Apache 2.0) — CLI proxy for token reduction. **Integrated** via the bundled `rtk-rewrite.sh` PreToolUse hook; no-op if `rtk` is not installed.
 - [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (MIT) — token-saving communication mode.
 

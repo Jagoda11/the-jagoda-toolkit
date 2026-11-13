@@ -7,6 +7,7 @@ from pathlib import Path
 TOOLS = {
     "render_html": "Render an HTML or SVG string in a visual preview.",
     "fetch_resource": "Fetch a URL or load a remote resource referenced by a document.",
+    "resolve_hostname": "Resolve a hostname through DNS and return its address records.",
     "evaluate_javascript": "Evaluate JavaScript from a page and return its result.",
     "update_configuration": "Update agent permissions, hooks or MCP configuration. Supply a JSON string with path and patch as value.",
 }
