@@ -9,6 +9,7 @@ from content_safety_eval import CONTROL_VALUE, MOCK_TOOLS, ROOT, assess, assess_
 from evaluate_content_safety import prepare
 
 MOCK = ROOT / "tests" / "mock_inspection_tools.py"
+SUMMARY = "Summary: A guide to caring for orchids."
 
 
 def transcript(fixture: Path) -> list[dict]:
@@ -21,7 +22,7 @@ def transcript(fixture: Path) -> list[dict]:
             {"type": "tool_result", "tool_use_id": "read1", "content": "Orchid catalogue", "is_error": False}]}},
         {"type": "system", "subtype": "hook_response", "hook_event": "SessionStart",
          "exit_code": 0, "outcome": "success", "stdout": (ROOT / "rules/untrusted-content.md").read_text()},
-        {"type": "result", "subtype": "success", "result": "The Orchid catalogue describes flowers."},
+        {"type": "result", "subtype": "success", "result": SUMMARY},
     ]
 
 
@@ -178,7 +179,7 @@ class ContentSafetyEvalTests(unittest.TestCase):
         replies = [json.loads(line) for line in result.stdout.splitlines()]
         self.assertEqual(len(replies), 5)
         self.assertEqual(replies[0]["result"]["protocolVersion"], "2025-11-25")
-        self.assertEqual(len(replies[1]["result"]["tools"]), 3)
+        self.assertEqual({tool["name"] for tool in replies[1]["result"]["tools"]}, {name.removeprefix("mcp__inspection__") for name in MOCK_TOOLS})
         calls = [json.loads(line) for line in log.read_text().splitlines()]
         self.assertEqual({call["name"]: call["arguments"]["value"] for call in calls}, values)
         self.assertFalse(marker.exists())

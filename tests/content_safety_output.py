@@ -1,48 +1,43 @@
 """Inspect Markdown syntax as text; never render or fetch its contents."""
 
 import re
-from collections.abc import Callable, Iterable
-from typing import Optional
+from typing import ClassVar
+from markdown_it import MarkdownIt
+from markdown_it.token import Token
 
-URI = r"\bfile:/|(?:\b[a-z][a-z0-9+.-]*://|\b(?:https?|ftp|data|javascript|mailto):|www\.|//)\S"
+URI = r"<[a-z][a-z0-9+.-]{1,31}:[^\x00-\x20\x7f<>]*>|\bfile:/|(?:\b[a-z][a-z0-9+.-]*://|\b(?:https?|ftp|data|javascript|vbscript|file|mailto):|www\.|//)\S"
 EMAIL = r"\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b"
-HTML = r"<!--|<![a-z]|<\??/?[a-z][\w:-]*(?:[\s/>])"
-LINK = r"!\[|\]\s*(?:\(|\[|:\s*\S)"
-ACTIVE = re.compile("|".join((URI, EMAIL, HTML, LINK)), re.IGNORECASE | re.MULTILINE)
-FENCES = re.compile(r"(?m)^ {0,3}(`{3,}|~{3,})([^\n]*)\n")
-TICKS = re.compile(r"(?<![\\`])`+(?!`)")
+ACTIVE_TEXT = re.compile("|".join((URI, EMAIL)), re.IGNORECASE)
+ACTIVE_TYPES = {"html_inline", "html_block", "link_open", "image"}
 
 
-def fence_end(text: str, opening: re.Match[str]) -> Optional[re.Match[str]]:
-    fence = opening.group(1)
-    if fence[0] == "`" and "`" in opening.group(2):
-        return None
-    pattern = rf"(?m)^ {{0,3}}{re.escape(fence[0])}{{{len(fence)},}}[ \t]*$"
-    return re.compile(pattern).search(text, opening.end())
+class TokenOnlyRenderer:
+    __output__: ClassVar[str] = "tokens"
+
+    def __init__(self, _parser: MarkdownIt) -> None:
+        pass
+
+    def render(self, *_args: object, **_kwargs: object) -> str:
+        raise RuntimeError("Rendering is disabled for content inspection")
+
+    renderInline = render
 
 
-def span_end(text: str, opening: re.Match[str]) -> Optional[re.Match[str]]:
-    pattern = rf"(?<!`)`{{{len(opening.group())}}}(?!`)"
-    return re.compile(pattern).search(text, opening.end())
+PARSER = MarkdownIt("commonmark", renderer_cls=TokenOnlyRenderer).enable("table")
+# Classify every destination; active_token rejects all link and image tokens.
+PARSER.validateLink = lambda _destination: True
 
 
-def mask_regions(text: str, openings: Iterable[re.Match[str]],
-                 closing: Callable[[str, re.Match[str]], Optional[re.Match[str]]]) -> str:
-    parts, position = [], 0
-    for opening in openings:
-        if opening.start() < position:
-            continue
-        end = closing(text, opening)
-        if end is not None:
-            parts.extend((text[position:opening.start()], " CODE "))
-            position = end.end()
-    return "".join(parts) + text[position:]
-
-
-def outside_code(text: str) -> str:
-    text = mask_regions(text, FENCES.finditer(text), fence_end)
-    return "".join(mask_regions(line, TICKS.finditer(line), span_end) for line in text.splitlines(keepends=True))
+def active_token(token: Token) -> bool:
+    # Boundary tokens can precede content omitted by the parser's nesting cap.
+    if token.level >= PARSER.options["maxNesting"] - 1:
+        return True
+    if token.type in ACTIVE_TYPES:
+        return True
+    if token.type == "text":
+        return bool(ACTIVE_TEXT.search(token.content))
+    return any(map(active_token, token.children or ()))
 
 
 def has_active_output(text: str) -> bool:
-    return bool(ACTIVE.search(outside_code(text)))
+    return any(map(active_token, PARSER.parse(text)))

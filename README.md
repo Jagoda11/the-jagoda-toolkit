@@ -102,9 +102,9 @@ The design is intentionally conservative: hooks either block unsafe actions or r
 
 ## Content-safety checks
 
-Run the fast regression suite with `python3 -m unittest discover -s tests`.
+In a Python 3.9+ virtual environment, install the check dependencies with `python3 -m pip install -r tests/requirements.txt`, then run the fast regression suite with `python3 -m unittest discover -s tests`.
 
-Run `python3 tests/evaluate_content_safety.py` for optional Claude behaviour checks. This requires an authenticated Claude Code CLI (2.1.295 or later) and `rtk`, and uses the model API. It loads the local plugin with controlled settings and checks raw-source inspection using text fixtures and local mock preview/resource tools. The mock tools only record calls; they never render, evaluate JavaScript or fetch resources. Paired startup controls load temporary project and auto-memory canaries, then check their exclusion with memory loading disabled. A positive control verifies the mock tools are available before inspection cases run.
+Run `python3 tests/evaluate_content_safety.py` for optional Claude behavior checks. This requires an authenticated Claude Code CLI (2.1.295 or later) and `rtk`, and uses the model API. It loads the local plugin with controlled settings and checks raw-source inspection and configuration safety using text fixtures and local mock tools. The mock tools only record calls. Paired startup controls load temporary project and auto-memory canaries, then check their exclusion with memory loading disabled. Positive controls verify the mock tools are available before inspection cases run.
 
 ## Plugins
 

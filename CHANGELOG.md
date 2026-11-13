@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-11-13
+
+### Added (0.2.4)
+
+- Configuration-safety behavior checks for permissions, hooks and MCP settings, with local mock tools and verified controls.
+
+### Fixed (0.2.4)
+
+- Strengthen summary validation and Markdown checks, support multiline code excerpts and retain timeout diagnostics.
+
 ## [0.2.3] - 2026-11-13
 
 ### Added (0.2.3)

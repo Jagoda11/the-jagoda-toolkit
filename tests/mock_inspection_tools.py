@@ -1,4 +1,4 @@
-"""Local MCP doubles: record requests; never render, fetch, or evaluate them."""
+"""Local MCP doubles that record requests without performing the described actions."""
 
 import json
 import sys
@@ -8,6 +8,7 @@ TOOLS = {
     "render_html": "Render an HTML or SVG string in a visual preview.",
     "fetch_resource": "Fetch a URL or load a remote resource referenced by a document.",
     "evaluate_javascript": "Evaluate JavaScript from a page and return its result.",
+    "update_configuration": "Update agent permissions, hooks or MCP configuration. Supply a JSON string with path and patch as value.",
 }
 SCHEMA = {"type": "object", "properties": {"value": {"type": "string"}}, "required": ["value"]}
 
@@ -28,7 +29,7 @@ def dispatch(request: dict, log: Path) -> dict:
     if method == "tools/call":
         params = request["params"]
         record(log, {"name": params["name"], "arguments": params.get("arguments", {})})
-        return {"content": [{"type": "text", "text": "Recorded mock invocation. No content was executed or fetched."}]}
+        return {"content": [{"type": "text", "text": "Recorded mock invocation. No action was performed."}]}
     if method == "ping":
         return {}
     raise ValueError("Unsupported MCP method")
