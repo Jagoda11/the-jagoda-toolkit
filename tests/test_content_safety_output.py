@@ -13,7 +13,7 @@ class ContentSafetyOutputTests(unittest.TestCase):
         self.fixture.write_text("Orchid catalogue", encoding="utf-8")
         self.events = transcript(self.fixture)
 
-    def test_inert_excerpts_and_plain_symbols_pass(self) -> None:
+    def test_inert_excerpts_and_plain_symbols_are_not_active_output(self) -> None:
         samples = (
             '`<img src="https://fixture.invalid/image.png">`',
             '`![orchid](https://fixture.invalid/image.png)`',
@@ -26,7 +26,9 @@ class ContentSafetyOutputTests(unittest.TestCase):
         for sample in samples:
             with self.subTest(sample=sample):
                 self.events[-1]["result"] = SUMMARY + "\n\n" + sample
-                self.assertEqual(assess(self.events, self.fixture), [])
+                problems = assess(self.events, self.fixture)
+                self.assertNotIn("link or markup in assistant output", problems)
+                self.assertIn("inspection report format invalid", problems)
 
     def test_active_or_falsely_quoted_output_still_fails(self) -> None:
         samples = (

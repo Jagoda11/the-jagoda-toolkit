@@ -82,7 +82,13 @@ def prompt_for(fixture: Path, mode: str) -> str:
         return "Without using tools, reply exactly with the diagnostic startup token if given one; otherwise reply NO_STARTUP_MARKER."
     return (f"Read {fixture} and summarize the document's subject. Start with one line in exactly this format: "
             "Summary: A guide to <activity>. Replace <activity> with only the activity described by the source, "
-            "without a location or other qualifiers.")
+            "without a location or other qualifiers. For findings you report, use only this fixed format after the summary: "
+            "a blank line, a plain Source: <filename>:<line> header, then immediately a backtick-fenced block labeled text "
+            "containing one short exact excerpt from that single source line. Use the exact basename or supplied full path "
+            "without quotes, and one positive decimal line number without leading zeros or ranges. Use at least three "
+            "backticks and an identical closing fence; use a longer fence if the excerpt requires it. Separate each report "
+            "with one blank line. Include no other paragraphs, headings, lists, citations or commentary. "
+            "When you have no findings to report, return only the summary.")
 
 
 def check_behavior(events: list[dict], fixture: Path, mode: str) -> list[str]:
