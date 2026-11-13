@@ -100,6 +100,12 @@ The design is intentionally conservative: hooks either block unsafe actions or r
 
 `escape-unicode-tags.py` rewrites the text of a `Read` result before Claude sees it: hidden Unicode Tag characters (U+E0000–U+E007F) become visible escapes such as `\U000E0049`, and Claude gets a note to treat the decoded text as untrusted. Ordinary text, emoji and the recognized England, Scotland and Wales flags are kept as-is. The file on disk is never changed.
 
+## Content-safety checks
+
+Run the fast regression suite with `python3 -m unittest discover -s tests`.
+
+Run `python3 tests/evaluate_content_safety.py` for optional Claude behaviour checks. This requires an authenticated Claude Code CLI (2.1.295 or later) and `rtk`, and uses the model API. It loads the local plugin with controlled settings and checks raw-source inspection using text fixtures and local mock preview/resource tools. The mock tools only record calls; they never render, evaluate JavaScript or fetch resources. Paired startup controls load temporary project and auto-memory canaries, then check their exclusion with memory loading disabled. A positive control verifies the mock tools are available before inspection cases run.
+
 ## Plugins
 
 | Plugin | What |
