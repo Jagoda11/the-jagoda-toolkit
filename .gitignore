@@ -5,3 +5,4 @@
 .idea/
 node_modules/
 TODO.md
+__pycache__/
