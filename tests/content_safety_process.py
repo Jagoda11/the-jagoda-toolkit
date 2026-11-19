@@ -62,4 +62,5 @@ def run_owned(args: list[str], cwd: Path, env: dict[str, str], timeout: float = 
             if isinstance(error, subprocess.TimeoutExpired):
                 error.output, error.stderr = stdout, stderr
             raise
+        signal_process(process, True)
         return subprocess.CompletedProcess(args, process.returncode, stdout, stderr)
