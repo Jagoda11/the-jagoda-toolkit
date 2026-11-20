@@ -16,5 +16,5 @@ cache/
 .dirty
 
 # Daemon runtime
-  daemon.pid
- *.sock
+daemon.pid
+*.sock
