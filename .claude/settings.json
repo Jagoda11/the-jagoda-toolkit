@@ -25,6 +25,8 @@
       "Task(Explore)",
       "Bash(awk *)",
       "Bash(pdftotext *)",
+      "Bash(python3 -m pytest *)",
+      "Bash(pytest *)",
       "Bash(rtk gain*)",
       "Bash(rtk --version)"
     ],

@@ -35,13 +35,19 @@ while True:
 
 CLOSED_TREE = """import json, os, pathlib, signal, subprocess, sys, time
 root = pathlib.Path(sys.argv[1])
-if len(sys.argv) == 2:
+if len(sys.argv) == 2 or sys.argv[2] == 'exit':
     subprocess.Popen([sys.executable, '-B', __file__, str(root), 'child'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     (root / '2.json').write_text(json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}))
     print('parent ready', flush=True)
+    if sys.argv[2:] == ['exit']:
+        while not (root / 'ready').exists():
+            time.sleep(.01)
+        print('diagnostic', file=sys.stderr, flush=True)
+        sys.exit(3)
 else:
     signal.signal(signal.SIGTERM, signal.SIG_IGN)
     (root / '0.json').write_text(json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}))
+    (root / 'ready').touch()
 while True:
     if len(sys.argv) > 2:
         with (root / 'heartbeat.txt').open('a') as output:
@@ -64,6 +70,29 @@ class OwnedProcessTests(unittest.TestCase):
         self.assertEqual(result.stderr, b'diagnostic\n')
 
     @unittest.skipUnless(os.name == 'posix', 'POSIX process groups')
+    def test_normal_exit_stops_a_descendant_ignoring_term(self) -> None:
+        script = self.root / 'closed.py'
+        script.write_text(CLOSED_TREE)
+        self.addCleanup(self.cleanup_tree)
+        result = owned.run_owned([sys.executable, '-B', str(script), str(self.root), 'exit'],
+                                 self.root, os.environ.copy(), timeout=2)
+        self.assertEqual(result.returncode, 3)
+        self.assertEqual(result.stdout, b'parent ready\n')
+        self.assertEqual(result.stderr, b'diagnostic\n')
+        child = json.loads((self.root / '0.json').read_text())
+        parent = json.loads((self.root / '2.json').read_text())
+        self.assertEqual(child['pgid'], parent['pgid'])
+        self.assertNotEqual(child['pgid'], os.getpgrp())
+        deadline = time.monotonic() + 2
+        while time.monotonic() < deadline:
+            state = subprocess.run(['ps', '-o', 'stat=', '-p', str(child['pid'])],
+                                   capture_output=True, text=True).stdout.strip()
+            if not state or state.startswith('Z'):
+                return
+            time.sleep(.05)
+        self.fail('The descendant survived a normal parent exit')
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process groups')
     def test_timeout_stops_child_and_grandchild(self) -> None:
         self.check_tree('normal')
 
@@ -75,9 +104,10 @@ class OwnedProcessTests(unittest.TestCase):
         script = self.root / 'tree.py'
         script.write_text(TREE)
         self.addCleanup(self.cleanup_tree)
+        args = [sys.executable, '-B', str(script), '2', str(self.root), mode]
+        env = os.environ.copy()
         with self.assertRaises(subprocess.TimeoutExpired) as caught:
-            owned.run_owned([sys.executable, '-B', str(script), '2', str(self.root), mode],
-                            self.root, os.environ.copy(), timeout=2)
+            owned.run_owned(args, self.root, env, timeout=2)
         self.assertIn(b'diagnostic-0', caught.exception.stderr)
         self.assertIn(b'"level": 0', caught.exception.stdout)
         identities = [json.loads((self.root / (str(level) + '.json')).read_text()) for level in range(3)]
@@ -97,9 +127,10 @@ class OwnedProcessTests(unittest.TestCase):
         script = self.root / 'closed.py'
         script.write_text(CLOSED_TREE)
         self.addCleanup(self.cleanup_tree)
+        args = [sys.executable, '-B', str(script), str(self.root)]
+        env = os.environ.copy()
         with self.assertRaises(subprocess.TimeoutExpired) as caught:
-            owned.run_owned([sys.executable, '-B', str(script), str(self.root)],
-                            self.root, os.environ.copy(), timeout=2)
+            owned.run_owned(args, self.root, env, timeout=2)
         self.assertIn(b'parent ready', caught.exception.stdout)
         child = json.loads((self.root / '0.json').read_text())
         before = (self.root / 'heartbeat.txt').read_bytes()
